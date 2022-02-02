@@ -3,19 +3,35 @@ import './App.css';
 
 function App() {
   const [blogPosts, setBlogPosts] = useState([]);
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
   
+  /* Add new blogpost */
+
   const addBlogPost = () => {
     setBlogPosts([
       ...blogPosts,
-      {title: "Cím 4", content: "Ez a cikk szövege 4", date: "2022.02.03."}
-    ])
+      {title: title, content: content, date: new Date().toString()}
+    ]);
+    setTitle("");
+    setContent("");
   }
 
+  /* Delete all blogpost */
+
+  const deleteBlogPosts = () => {
+    setBlogPosts([])
+  }
+ 
   return (
     <main className="container">
-      <input type="text" placeholder="Title"/>
-      <input type="text" placeholder="Content"/>
+
+      <input type="text" placeholder="Title" value={title} onChange={(event) => setTitle(event.target.value)}/>
+
+      <input type="text" placeholder="Content" value={content} onChange={(event) => setContent(event.target.value)}/>
+
       <button onClick={addBlogPost}>Add</button>
+
       <h1>Posztok</h1>
       {blogPosts.map((blogPost, index) => (
         <article key={index}>
@@ -30,6 +46,7 @@ function App() {
           <button>Remove</button>
         </article>
       ))}
+       <button onClick={deleteBlogPosts}>Delete all posts</button>
     </main>
   );
 }
